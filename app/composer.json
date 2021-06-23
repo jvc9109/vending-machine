@@ -1,0 +1,51 @@
+{
+  "name": "jvc9109/vending_machine",
+  "description": "PoC of a vending Machine",
+  "license": "proprietary",
+  "require": {
+    "php": "^8.0",
+    "ext-apcu": "*",
+    "ext-json": "*",
+    "ext-intl": "*",
+    "ext-zend-opcache": "*",
+    "ext-pdo": "*",
+
+    "lambdish/phunctional": "^2.1",
+    "doctrine/dbal": "^2.9",
+    "doctrine/orm": "^2.8",
+
+    "ramsey/uuid": "^4.0",
+    "symfony/console": "*",
+    "symfony/dotenv": "*",
+    "symfony/framework-bundle": "*",
+    "symfony/messenger": "*",
+    "symfony/yaml": "*",
+    "symfony/cache": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "VendingMachine\\Apps\\Vending\\Backend\\": "apps/vending/backend/src",
+      "VendingMachine\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "VendingMachine\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "symfony": {
+      "require": "5.3.*",
+      "allow-contrib": true
+    }
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "symfony/debug-bundle": "*",
+    "symfony/monolog-bundle": "^3.0",
+    "symfony/profiler-pack": "*",
+    "phpunit/phpunit": "^9.5",
+    "cyberclick-os/faker": "*",
+    "mockery/mockery": "^1.4"
+  }
+}

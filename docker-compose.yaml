@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  database:
+    restart: unless-stopped
+    image: mysql:8.0
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: local
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    container_name: vending-database-local
+    networks:
+      - vending-network
+
+  app:
+    environment:
+      - APP_ENV=dev
+    restart: unless-stopped
+    command: ["/usr/bin/supervisord"]
+    build:
+      context: docker
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+      - "8000:443"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - database
+    container_name: vending-local
+    hostname: vending-local
+    networks:
+      - vending-network
+
+networks:
+  vending-network:
+    name: vending-network-local

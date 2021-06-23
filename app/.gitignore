@@ -1,0 +1,21 @@
+###> phpstorm ###
+etc/*.http
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/var/
+/vendor/
+/apps/**/*/var
+/apps/**/*/build
+###< symfony/framework-bundle ###
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+phpunit.xml.dist
+phpunit-9.0.phar
+###< symfony/phpunit-bridge ###
+###> phpunit/phpunit ###
+.phpunit.result.cache
+###< phpunit/phpunit ###

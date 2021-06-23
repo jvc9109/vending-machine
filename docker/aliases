@@ -1,0 +1,3 @@
+alias vendingdebug='php -dxdebug.start_with_request=yes /app/apps/vending/backend/bin/console '
+alias vending='php /app/apps/vending/backend/bin/console '
+alias vendingtest='/app/vendor/bin/phpunit --testsuite=vending'
