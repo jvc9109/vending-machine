@@ -4,7 +4,9 @@
 namespace VendingMachine\Machine\CoinsCounter\Domain;
 
 
-final class CoinsCounter
+use VendingMachine\Shared\Domain\Aggregate\AggregateRoot;
+
+final class CoinsCounter extends AggregateRoot
 {
 
 }
