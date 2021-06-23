@@ -19,7 +19,7 @@ services:
     environment:
       - APP_ENV=dev
     restart: unless-stopped
-    command: ["/usr/bin/supervisord"]
+    command: ["/home/run.sh"]
     build:
       context: docker
       dockerfile: Dockerfile

@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y build-essential software-properties-com
 
 # Install PHP
 RUN add-apt-repository ppa:ondrej/php && add-apt-repository ppa:ondrej/apache2 && apt update -yqq
-RUN apt install -y php8.0 php8.0-common php8.0-zip php8.0-gd php8.0-mysql php8.0-mbstring php8.0-bcmath php8.0-apcu
+RUN apt install -y php8.0 php8.0-common php8.0-zip php8.0-gd php8.0-mysql php8.0-mbstring php8.0-bcmath php8.0-apcu php8.0-curl php8.0-intl php8.0-dom
 
 
 # Install and set-up xdebug for apache (with remote autostart) and cli (without remote autostart, use sfdebug instead)

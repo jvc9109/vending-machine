@@ -1,0 +1,106 @@
+<?php
+declare(strict_types=1);
+
+namespace VendingMachine\Shared\Domain;
+
+
+use DateTimeImmutable;
+use DateTimeInterface;
+use ReflectionClass;
+use RuntimeException;
+use function Lambdish\Phunctional\filter;
+
+final class Utils
+{
+    public static function endsWith(string $needle, string $haystack): bool
+    {
+        return str_ends_with($haystack, $needle);
+    }
+
+    public static function dateToString(DateTimeInterface $date): string
+    {
+        return $date->format(DateTimeInterface::ATOM);
+    }
+
+    public static function stringToDate(string $date): DateTimeImmutable
+    {
+        return new DateTimeImmutable($date);
+    }
+
+    public static function jsonEncode(array $values): string
+    {
+        return json_encode($values);
+    }
+
+    public static function jsonDecode(string $json): array
+    {
+        $data = json_decode($json, true);
+
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new RuntimeException('Unable to parse response body into JSON: ' . json_last_error());
+        }
+
+        return $data;
+    }
+
+    public static function toSnakeCase(string $text): string
+    {
+        return ctype_lower($text) ? $text : strtolower(preg_replace('/([^A-Z\s])([A-Z])/', "$1_$2", $text));
+    }
+
+    public static function toCamelCase(string $text): string
+    {
+        return lcfirst(str_replace('_', '', ucwords($text, '_')));
+    }
+
+    public static function dot(array $array, string $prepend = ''): array
+    {
+        $results = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value) && !empty($value)) {
+                $results = array_merge($results, static::dot($value, $prepend . $key . '.'));
+            } else {
+                $results[$prepend . $key] = $value;
+            }
+        }
+
+        return $results;
+    }
+
+    public static function filesIn(string $path, string $fileType): array
+    {
+        return filter(
+            static fn(string $possibleModule) => strstr($possibleModule, $fileType),
+            scandir($path)
+        );
+    }
+
+    public static function extractClassName(object $object): string
+    {
+        $reflect = new ReflectionClass($object);
+
+        return $reflect->getShortName();
+    }
+
+    public static function iterableToArray(iterable $iterable): array
+    {
+        if (is_array($iterable)) {
+            return $iterable;
+        }
+
+        return iterator_to_array($iterable);
+    }
+
+    public static function validateHmacFromArray(string $hmac, array $queryArray, string $secret): bool
+    {
+        $queryString = '';
+        foreach ($queryArray as $queryKey => $queryValue) {
+            if ($queryKey !== 'hmac') {
+                $queryString .= "$queryKey=$queryValue&";
+            }
+        }
+        $queryString = substr($queryString, 0, -1);
+
+        return hash_hmac('sha256', $queryString, $secret) === $hmac;
+    }
+}
