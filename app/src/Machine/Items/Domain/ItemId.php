@@ -4,7 +4,9 @@
 namespace VendingMachine\Machine\Items\Domain;
 
 
-final class ItemId
+use VendingMachine\Shared\Domain\ValueObject\Uuid;
+
+final class ItemId extends Uuid
 {
 
 }

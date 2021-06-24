@@ -4,7 +4,9 @@
 namespace VendingMachine\Machine\Items\Domain;
 
 
-final class ItemPrice
+use VendingMachine\Shared\Domain\ValueObject\Money\CoinValueObject;
+
+final class ItemPrice extends CoinValueObject
 {
 
 }

@@ -4,7 +4,9 @@
 namespace VendingMachine\Machine\CoinsCounter\Domain;
 
 
-final class CoinsCounterCoinValue
+use VendingMachine\Shared\Domain\ValueObject\Money\CoinValueObject;
+
+final class CoinsCounterCoinValue extends CoinValueObject
 {
 
 }

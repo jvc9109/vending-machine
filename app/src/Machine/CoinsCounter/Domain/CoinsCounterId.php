@@ -4,7 +4,9 @@
 namespace VendingMachine\Machine\CoinsCounter\Domain;
 
 
-final class CoinsCounterId
+use VendingMachine\Shared\Domain\ValueObject\Uuid;
+
+final class CoinsCounterId extends Uuid
 {
 
 }
