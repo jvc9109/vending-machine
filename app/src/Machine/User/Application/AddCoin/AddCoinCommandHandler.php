@@ -16,7 +16,7 @@ final class AddCoinCommandHandler implements CommandHandler
 
     public function __invoke(AddCoinCommand $command): void
     {
-        $this->increaser->__invoke();
+        $this->increaser->__invoke($command->userId(), $command->value());
     }
 
 
