@@ -29,10 +29,10 @@ services:
   VendingMachine\Shared\Infrastructure\Doctrine\DatabaseConnections:
     arguments: [ !tagged vendingmachine.database_connection ]
 
-  VendingMachine\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+  VendingMachine\Shared\Infrastructure\Bus\Command\InMemory\InMemorySymfonyCommandBus:
     arguments: [ !tagged vendingmachine.command_handler ]
 
-  VendingMachine\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
+  VendingMachine\Shared\Infrastructure\Bus\Query\InMemory\InMemorySymfonyQueryBus:
     arguments: [ !tagged vendingmachine.query_handler ]
     lazy: true
 
@@ -44,7 +44,5 @@ services:
 
   VendingMachine\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
     arguments: [ !tagged vendingmachine.domain_event_subscriber ]
-
-
 
   VendingMachine\Shared\Domain\Bus\Event\EventBus: '@VendingMachine\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'

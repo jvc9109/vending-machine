@@ -36,6 +36,6 @@ final class TemporalUserRepository implements UserRepository
 
     private function fileName(string $id): string
     {
-        return sprintf('%s.%s.repo', sys_get_temp_dir(), $id);
+        return sprintf('%s/%s.repo', sys_get_temp_dir(), $id);
     }
 }

@@ -19,11 +19,10 @@ final class InMemorySymfonyCommandBus implements CommandBus
 {
     private MessageBus $bus;
 
-    public function __construct(iterable $commandHandlers, ?MiddlewareInterface $middlewareHandler)
+    public function __construct(iterable $commandHandlers)
     {
         $this->bus = new MessageBus(
             [
-                $middlewareHandler,
                 new HandleMessageMiddleware(
                     new HandlersLocator(CallableFirstParameterExtractor::forCallables($commandHandlers))
                 ),

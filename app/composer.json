@@ -15,12 +15,13 @@
     "doctrine/orm": "^2.8",
 
     "ramsey/uuid": "^4.0",
-    "symfony/console": "*",
-    "symfony/dotenv": "*",
-    "symfony/framework-bundle": "*",
-    "symfony/messenger": "*",
-    "symfony/yaml": "*",
-    "symfony/cache": "*"
+    "symfony/cache": "5.2.*",
+    "symfony/console": "5.2.*",
+    "symfony/dotenv": "5.2.*",
+    "symfony/framework-bundle": "5.2.*",
+    "symfony/yaml": "5.2.*",
+    "symfony/messenger": "5.2.*",
+    "symfony/monolog-bundle": "^3.6"
   },
   "autoload": {
     "psr-4": {
@@ -33,17 +34,10 @@
       "VendingMachine\\Tests\\": "tests"
     }
   },
-  "extra": {
-    "symfony": {
-      "require": "5.3.*",
-      "allow-contrib": true
-    }
-  },
   "require-dev": {
     "roave/security-advisories": "dev-master",
     "symfony/debug-bundle": "*",
     "symfony/monolog-bundle": "^3.0",
-    "symfony/profiler-pack": "*",
     "phpunit/phpunit": "^9.5",
     "cyberclick-os/faker": "*",
     "mockery/mockery": "^1.4"
