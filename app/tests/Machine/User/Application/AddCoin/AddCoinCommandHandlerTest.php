@@ -20,7 +20,7 @@ final class AddCoinCommandHandlerTest extends UserModuleUnitTestCase
     private AddCoinCommandHandler $handler;
 
     /** @test */
-    public function it_should_init_a_new_session(): void
+    public function it_should_add_a_valid_coin_to_user_coins(): void
     {
         $command = AddCoinCommandMother::create();
         $user    = UserMother::create(

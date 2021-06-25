@@ -14,7 +14,7 @@ final class AddCoinCommandMother
 {
     public static function create(?UserId $userId = null, ?CoinValueObject $coin = null): AddCoinCommand
     {
-        return new AddCoinCommand($userId?->value() ?? UserIdMother::create()->value(), $coin?->value() ?? RandomElementPicker::from(CoinValueObject::VALID_COINS));
+        return new AddCoinCommand($userId?->value() ?? UserIdMother::create()->value(), $coin?->value() ?? RandomElementPicker::from(CoinValueObject::VALID_COINS)[0]);
     }
 
 }

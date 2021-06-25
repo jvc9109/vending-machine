@@ -20,9 +20,9 @@ final class UserCoinsMother
     public static function createWithCoins(): UserCoins
     {
         $coins = [];
-        $totalCoins = MotherCreator::random()->numberBetween(0, 5)
+        $totalCoins = MotherCreator::random()->numberBetween(0, 5);
         for ($i = 1; $i <= $totalCoins; $i++) {
-            $coins[] = new CoinValueObject(RandomElementPicker::from(CoinValueObject::VALID_COINS));
+            $coins[] = new CoinValueObject(RandomElementPicker::from(CoinValueObject::VALID_COINS)[0]);
         }
 
         return new UserCoins($coins);
