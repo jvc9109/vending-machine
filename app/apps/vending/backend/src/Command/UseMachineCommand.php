@@ -29,9 +29,7 @@ final class UseMachineCommand extends Command
     {
         $this
             ->setName('vending:machine:use')
-            ->addArgument('userCommand', InputArgument::REQUIRED,
-                'String with the set of actions to instruct the vending machine. They should be comma-separated with a white space'
-            )
+
             ->setDescription('Start to use the vending machine. Add the set of commands for the machine.');
     }
 
@@ -46,17 +44,16 @@ final class UseMachineCommand extends Command
         do {
             $action = $helper->ask($input, $output, new Question(''));
             $result = match (true) {
-                preg_match('/^\d.\d{2}$/', $action) === 1 => $this->insertCoin((float)$action, $userId),
+                preg_match('/^\d+.?(\d+)?$/', $action) === 1 => $this->insertCoin((float)$action, $userId),
                 preg_match('/^GET-\w+$/i', $action) === 1 => $this->obtainItem($action, $userId),
                 preg_match('/^service$/i', $action) === 1 => $this->enterServiceMode($input, $output, $userId),
                 preg_match('/^RETURN-COINS$/i', $action) === 1 => $this->returnUserCoins($userId),
-                self::EXIT === 'exit' => $exit = true,
+                self::EXIT === $action => $exit = true,
                 default => null
             };
-
             if ($exit) {
                 $output->writeln('Good bye!');
-                $output->writeln($this->returnUserCoins());
+                $output->writeln($this->returnUserCoins($userId));
                 continue;
             }
 
@@ -64,6 +61,9 @@ final class UseMachineCommand extends Command
                 $output->writeln('Sorry I did not understand you');
                 continue;
             }
+
+            $output->writeln($result);
+
         } while (!$exit);
 
         return Command::SUCCESS;

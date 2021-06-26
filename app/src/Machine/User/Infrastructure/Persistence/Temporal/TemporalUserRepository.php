@@ -22,15 +22,7 @@ final class TemporalUserRepository implements UserRepository
     public function search(UserId $id): ?User
     {
         return file_exists($this->fileName($id->value()))
-            ? unserialize(file_get_contents($this->fileName($id->value())), [
-                'allowed_classes' => [
-                    User::class,
-                    UserId::class,
-                    UserCoins::class,
-                    UserType::class,
-                    DateTimeImmutable::class
-                ]
-            ])
+            ? unserialize(file_get_contents($this->fileName($id->value())))
             : null;
     }
 

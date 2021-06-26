@@ -26,17 +26,21 @@ final class User extends AggregateRoot
     public function insertCoin(float $coin): void
     {
         $this->coins = $this->coins->add(new CoinValueObject($coin));
+        $this->updatedOn = new \DateTimeImmutable();
     }
 
     public function serviceMachine(): void
     {
         $this->type = UserType::service();
+        $this->updatedOn = new \DateTimeImmutable();
+
     }
 
     public function returnCoins(): UserCoins
     {
         $coins = $this->coins;
         $this->coins = new UserCoins([]);
+        $this->updatedOn = new \DateTimeImmutable();
 
         return $coins;
     }

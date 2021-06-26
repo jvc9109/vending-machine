@@ -26,7 +26,6 @@ final class CoinIncreaser
         }
 
         $user->insertCoin($value);
-
         $this->repository->save($user);
 
     }
