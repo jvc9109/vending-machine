@@ -8,6 +8,7 @@ use VendingMachine\Machine\User\Domain\UserCoins;
 use VendingMachine\Shared\Domain\ValueObject\Money\CoinValueObject;
 use VendingMachine\Tests\Shared\Domain\MotherCreator;
 use VendingMachine\Tests\Shared\Domain\RandomElementPicker;
+use function Lambdish\Phunctional\map;
 
 final class UserCoinsMother
 {
@@ -29,7 +30,7 @@ final class UserCoinsMother
 
     public static function create(array $coins): UserCoins
     {
-        return new UserCoins($coins);
+        return new UserCoins(map(fn(float $coin): CoinValueObject => new CoinValueObject($coin), $coins));
 
     }
 }

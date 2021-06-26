@@ -24,4 +24,5 @@ class CoinValueObject
             throw new CoinNotAcceptDomainError($value);
         }
     }
+
 }

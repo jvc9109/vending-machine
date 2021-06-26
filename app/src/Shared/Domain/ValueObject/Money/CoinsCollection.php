@@ -13,11 +13,6 @@ class CoinsCollection extends Collection
         return CoinValueObject::class;
     }
 
-    final public function add(CoinValueObject $coin): self
-    {
-        return new self([...$this->items(),$coin]);
-    }
-
     final public function toPrimitives(): array
     {
         $coins = $this->items();

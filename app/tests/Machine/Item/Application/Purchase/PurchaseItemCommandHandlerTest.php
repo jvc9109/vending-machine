@@ -65,6 +65,8 @@ final class PurchaseItemCommandHandlerTest extends ItemModuleUnitTestCase
             ItemPurchasedDomainEventMother::create($item->id(), $item->price())
         );
 
+        $this->dispatch($command, $this->handler);
+
     }
 
 }

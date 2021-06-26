@@ -10,6 +10,6 @@ final class ItemStatusMother
 {
     public static function create(?string $value = null): ItemStatus
     {
-        return new ItemStatus($value ?? ItemStatus::random());
+        return new ItemStatus($value ?? ItemStatus::random()->value());
     }
 }

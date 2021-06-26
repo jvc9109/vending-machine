@@ -33,7 +33,7 @@ final class Item extends AggregateRoot
             $availableMoney += $coin->value();
         }
 
-        if ($availableMoney < $this->price) {
+        if ($availableMoney < $this->price->value()) {
             throw new \Exception();
         }
 

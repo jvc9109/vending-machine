@@ -4,7 +4,9 @@
 namespace VendingMachine\Machine\Items\Application\Purchase;
 
 
-final class PurchaseItemCommand
+use VendingMachine\Shared\Domain\Bus\Command\Command;
+
+final class PurchaseItemCommand implements Command
 {
 
 
