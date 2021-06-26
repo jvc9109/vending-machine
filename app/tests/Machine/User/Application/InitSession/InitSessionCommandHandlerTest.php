@@ -11,7 +11,7 @@ use VendingMachine\Tests\Machine\User\Domain\UserMother;
 use VendingMachine\Tests\Machine\User\Domain\UserTypeMother;
 use VendingMachine\Tests\Machine\User\UserModuleUnitTestCase;
 
-final class InitSessionCommandHandlerTestModule extends UserModuleUnitTestCase
+final class InitSessionCommandHandlerTest extends UserModuleUnitTestCase
 {
     private InitSessionCommandHandler $handler;
 

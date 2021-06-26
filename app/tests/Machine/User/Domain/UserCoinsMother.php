@@ -4,7 +4,6 @@
 namespace VendingMachine\Tests\Machine\User\Domain;
 
 
-use Faker\Generator;
 use VendingMachine\Machine\User\Domain\UserCoins;
 use VendingMachine\Shared\Domain\ValueObject\Money\CoinValueObject;
 use VendingMachine\Tests\Shared\Domain\MotherCreator;
@@ -19,10 +18,10 @@ final class UserCoinsMother
 
     public static function createWithCoins(): UserCoins
     {
-        $coins = [];
+        $coins      = [];
         $totalCoins = MotherCreator::random()->numberBetween(0, 5);
         for ($i = 1; $i <= $totalCoins; $i++) {
-            $coins[] = new CoinValueObject(RandomElementPicker::from(CoinValueObject::VALID_COINS)[0]);
+            $coins[] = new CoinValueObject(RandomElementPicker::from(...CoinValueObject::VALID_COINS));
         }
 
         return new UserCoins($coins);

@@ -11,7 +11,7 @@ final class UserTypeMother
 {
     public static function create(?string $value = null): UserType
     {
-        return new UserType($value ?? RandomElementPicker::from([UserType::user()->value(), UserType::service()->value()]));
+        return new UserType($value ?? RandomElementPicker::from(...[UserType::user()->value(), UserType::service()->value()]));
     }
 
     public static function createUser(): UserType
