@@ -12,6 +12,7 @@ final class ItemPurchasedDomainEvent extends DomainEvent
     public function __construct(
         string $aggregateId,
         private float $itemPrice,
+        private string $userId,
         ?string $eventId = null,
         ?string $occurredOn = null
     )
@@ -24,6 +25,7 @@ final class ItemPurchasedDomainEvent extends DomainEvent
         return new self(
             $aggregateId,
             $body['itemPrice'],
+            $body['userId'],
             $eventId,
             $occurredOn
         );
@@ -37,7 +39,8 @@ final class ItemPurchasedDomainEvent extends DomainEvent
     public function toPrimitives(): array
     {
         return [
-            'itemPrice' => $this->itemPrice
+            'itemPrice' => $this->itemPrice,
+            'userId' => $this->userId,
         ];
     }
 
@@ -46,5 +49,9 @@ final class ItemPurchasedDomainEvent extends DomainEvent
         return $this->itemPrice;
     }
 
+    public function userId(): string
+    {
+        return $this->userId;
+    }
 
 }

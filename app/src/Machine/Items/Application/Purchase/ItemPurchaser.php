@@ -46,7 +46,7 @@ final class ItemPurchaser
             map(fn(float $coin): CoinValueObject => new CoinValueObject($coin), $user->coins())
         );
 
-        $item->purchaseItem($userCoins);
+        $item->purchaseItem($userCoins, $user->id());
 
         $this->repository->save($item);
 

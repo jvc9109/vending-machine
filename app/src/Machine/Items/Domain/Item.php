@@ -25,7 +25,7 @@ final class Item extends AggregateRoot
         parent::__construct();
     }
 
-    public function purchaseItem(CoinsCollection $userCoins): void
+    public function purchaseItem(CoinsCollection $userCoins, string $userId): void
     {
         $availableMoney = 0;
         foreach ($userCoins as $coin) {
@@ -44,7 +44,7 @@ final class Item extends AggregateRoot
         }
 
         $this->record(
-            new ItemPurchasedDomainEvent($this->id->value(), $this->price->value())
+            new ItemPurchasedDomainEvent($this->id->value(), $this->price->value(), $userId)
         );
     }
 
