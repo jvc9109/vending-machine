@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace VendingMachine\Tests\Shared\Infrastructure\PhpUnit;
 
 
-use VendingMachine\Shared\Domain\Bus\Command\AsyncCommandBus;
 use VendingMachine\Shared\Domain\Bus\Command\Command;
 use VendingMachine\Shared\Domain\Bus\Command\CommandBus;
 use VendingMachine\Shared\Domain\Bus\Event\DomainEvent;
@@ -24,7 +23,6 @@ abstract class UnitTestCase extends MockeryTestCase
 {
     private EventBus|MockInterface|null $eventBus;
     private QueryBus|MockInterface|null $queryBus;
-    private AsyncCommandBus|MockInterface|null $asyncCommandBus;
     private CommandBus|MockInterface|null $commandBus;
     private UuidGenerator|MockInterface|null $uuidGenerator;
 
@@ -57,11 +55,6 @@ abstract class UnitTestCase extends MockeryTestCase
             ->shouldReceive('publish')
             ->with($this->similarTo($domainEvent))
             ->andReturnNull();
-    }
-
-    protected function asyncCommandBus(): AsyncCommandBus|MockInterface
-    {
-        return $this->asyncCommandBus = $this->asyncCommandBus ?? $this->mock(AsyncCommandBus::class);
     }
 
     protected function commandBus(): CommandBus|MockInterface
@@ -133,14 +126,6 @@ abstract class UnitTestCase extends MockeryTestCase
     protected function queryBusShouldNotBeenCalled(): void
     {
         $this->queryBus->shouldNotHaveBeenCalled();
-    }
-
-    protected function shouldAsyncDispatchCommand(Command $command): void
-    {
-        $this->asyncCommandBus()
-            ->shouldReceive('dispatch')
-            ->with($this->similarTo($command))
-            ->andReturnNull();
     }
 
     protected function shouldDispatchCommand(Command $command): void

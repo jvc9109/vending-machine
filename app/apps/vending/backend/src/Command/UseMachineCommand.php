@@ -8,6 +8,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use VendingMachine\Machine\Items\Application\Obtain\ItemResponse;
+use VendingMachine\Machine\Items\Application\Obtain\ObtainItemQuery;
 use VendingMachine\Machine\User\Application\AddCoin\AddCoinCommand;
 use VendingMachine\Machine\User\Application\Find\FindUserQuery;
 use VendingMachine\Machine\User\Application\Find\UserResponse;
@@ -80,16 +82,34 @@ final class UseMachineCommand extends Command
         try {
             $this->commandBus->dispatch(new AddCoinCommand($userId, $value));
         } catch (DomainError $e) {
-            return [$e->getMessage()];
+            return $this->writeErrorMessages($e);
         }
 
         return ['Accepted!'];
     }
 
+    private function writeErrorMessages(\Throwable $e): array
+    {
+        return ['Oops something went Wrong', $e->getMessage(), 'Try again!'];
+    }
+
     private function obtainItem(string $action, string $userId): array
     {
-        [$action, $item] = explode($action, '-');
-        return ['Here there is your item'];
+        [$action, $itemName] = explode($action, '-');
+        //Obatain item by name
+        try {
+            /** @var ItemResponse $item */
+            $item = $this->queryBus->ask(new ObtainItemQuery($itemName));
+            //OrderPurchase
+
+            //else -> ask for user (has already an updated usercoins count)
+            // side effects: on item purchased -> add machine coins && calculate new user coins (aka exchange)  -> on exchange given -> recalculate machine coins
+            //send return coins command
+            return ['Here there is your item'];
+        } catch (DomainError $e) {
+            return $this->writeErrorMessages($e);
+        }
+
     }
 
     private function enterServiceMode(InputInterface $input, OutputInterface $output, string $userId): array
@@ -110,7 +130,7 @@ final class UseMachineCommand extends Command
 
             return $result;
         } catch (DomainError $e) {
-            return [$e->getMessage()];
+            return $this->writeErrorMessages($e);
         }
 
     }

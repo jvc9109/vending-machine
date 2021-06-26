@@ -28,4 +28,31 @@ final class Item extends AggregateRoot
             $this->status = ItemStatus::outOfStock();
         }
     }
+
+    public function id(): ItemId
+    {
+        return $this->id;
+    }
+
+    public function name(): ItemName
+    {
+        return $this->name;
+    }
+
+    public function price(): ItemPrice
+    {
+        return $this->price;
+    }
+
+    public function status(): ItemStatus
+    {
+        return $this->status;
+    }
+
+    public function stock(): ItemStock
+    {
+        return $this->stock;
+    }
+
+
 }
