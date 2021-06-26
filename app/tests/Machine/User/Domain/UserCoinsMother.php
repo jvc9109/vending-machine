@@ -26,4 +26,10 @@ final class UserCoinsMother
 
         return new UserCoins($coins);
     }
+
+    public static function create(array $coins): UserCoins
+    {
+        return new UserCoins($coins);
+
+    }
 }

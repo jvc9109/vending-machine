@@ -5,6 +5,11 @@ namespace VendingMachine\Machine\Items\Domain;
 
 
 use VendingMachine\Shared\Domain\Aggregate\AggregateRoot;
+use VendingMachine\Shared\Domain\ValueObject\Money\CoinsCollection;
+use VendingMachine\Shared\Domain\ValueObject\Money\CoinValueObject;
+use function Lambdish\Phunctional\map;
+use function Lambdish\Phunctional\reduce;
+use const Lambdish\Phunctional\map;
 
 final class Item extends AggregateRoot
 {
@@ -20,13 +25,27 @@ final class Item extends AggregateRoot
         parent::__construct();
     }
 
-    public function purchaseItem(): void
+    public function purchaseItem(CoinsCollection $userCoins): void
     {
+        $availableMoney = 0;
+        foreach ($userCoins as $coin) {
+            /** @var CoinValueObject $coin */
+            $availableMoney += $coin->value();
+        }
+
+        if ($availableMoney < $this->price) {
+            throw new \Exception();
+        }
+
         $this->stock = $this->stock->reduceOne();
 
         if ($this->stock->isEmpty()) {
             $this->status = ItemStatus::outOfStock();
         }
+
+        $this->record(
+            new ItemPurchasedDomainEvent($this->id->value(), $this->price->value())
+        );
     }
 
     public function id(): ItemId

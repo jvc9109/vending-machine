@@ -87,20 +87,6 @@ final class Utils
         if (is_array($iterable)) {
             return $iterable;
         }
-
         return iterator_to_array($iterable);
-    }
-
-    public static function validateHmacFromArray(string $hmac, array $queryArray, string $secret): bool
-    {
-        $queryString = '';
-        foreach ($queryArray as $queryKey => $queryValue) {
-            if ($queryKey !== 'hmac') {
-                $queryString .= "$queryKey=$queryValue&";
-            }
-        }
-        $queryString = substr($queryString, 0, -1);
-
-        return hash_hmac('sha256', $queryString, $secret) === $hmac;
     }
 }

@@ -135,4 +135,12 @@ abstract class UnitTestCase extends MockeryTestCase
             ->with($this->similarTo($command))
             ->andReturnNull();
     }
+
+    protected function shouldAskQuery(Query $query, ?Response $response): void
+    {
+        $this->queryBus()
+            ->shouldReceive('ask')
+            ->with($this->similarTo($query))
+            ->andReturn($response);
+    }
 }

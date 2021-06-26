@@ -8,7 +8,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use VendingMachine\Machine\Items\Application\Obtain\ItemResponse;
 use VendingMachine\Machine\Items\Application\Obtain\ObtainItemQuery;
 use VendingMachine\Machine\User\Application\AddCoin\AddCoinCommand;
 use VendingMachine\Machine\User\Application\Find\FindUserQuery;
@@ -38,7 +37,7 @@ final class UseMachineCommand extends Command
     {
         $this
             ->setName('vending:machine:use')
-            ->setDescription('Start to use the vending machine. Add the set of commands for the machine.');
+            ->setDescription('Start to use the vending machine. IncreaseStock the set of commands for the machine.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -98,7 +97,7 @@ final class UseMachineCommand extends Command
         [$action, $itemName] = explode($action, '-');
         //Obatain item by name
         try {
-            /** @var ItemResponse $item */
+            /** @var ItemREs $item */
             $item = $this->queryBus->ask(new ObtainItemQuery($itemName));
             //OrderPurchase
 
@@ -121,14 +120,9 @@ final class UseMachineCommand extends Command
         try {
             /** @var UserResponse $user */
             $user = $this->queryBus->ask(new FindUserQuery($userId));
-
-            $result = $user->coins();
-
             $this->commandBus->dispatch(new ReturnCoinsCommand($user->id()));
+            return $user->coins();
 
-            $result[] = 'All coins returned';
-
-            return $result;
         } catch (DomainError $e) {
             return $this->writeErrorMessages($e);
         }

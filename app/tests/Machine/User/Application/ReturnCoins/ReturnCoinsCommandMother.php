@@ -12,7 +12,7 @@ final class ReturnCoinsCommandMother
 {
     public static function create(?UserId $id = null): ReturnCoinsCommand
     {
-        return new ReturnCoinsCommand($id->value() ?? UserIdMother::create()->value());
+        return new ReturnCoinsCommand($id?->value() ?? UserIdMother::create()->value());
     }
 
 }
