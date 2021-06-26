@@ -15,8 +15,8 @@ use VendingMachine\Machine\User\Application\InitSession\InitSessionCommand;
 use VendingMachine\Machine\User\Application\ReturnCoins\ReturnCoinsCommand;
 use VendingMachine\Shared\Domain\Bus\Command\CommandBus;
 use VendingMachine\Shared\Domain\Bus\Query\QueryBus;
+use VendingMachine\Shared\Domain\DomainError;
 use VendingMachine\Shared\Domain\UuidGenerator;
-use VendingMachine\Shared\Domain\ValueObject\Money\CoinNotAcceptDomainError;
 
 final class UseMachineCommand extends Command
 {
@@ -52,7 +52,7 @@ final class UseMachineCommand extends Command
             $result = match (true) {
                 preg_match('/^\d+.?(\d+)?$/', $action) === 1 => $this->insertCoin((float)$action, $userId),
                 preg_match('/^GET-\w+$/i', $action) === 1 => $this->obtainItem($action, $userId),
-                preg_match('/^service$/i', $action) === 1 => $this->enterServiceMode($input, $output, $userId),
+                preg_match('/^SERVICE$/i', $action) === 1 => $this->enterServiceMode($input, $output, $userId),
                 preg_match('/^RETURN-COINS$/i', $action) === 1 => $this->returnUserCoins($userId),
                 self::EXIT === $action => $exit = true,
                 default => null
@@ -79,7 +79,7 @@ final class UseMachineCommand extends Command
     {
         try {
             $this->commandBus->dispatch(new AddCoinCommand($userId, $value));
-        } catch (CoinNotAcceptDomainError $e) {
+        } catch (DomainError $e) {
             return [$e->getMessage()];
         }
 
@@ -98,16 +98,20 @@ final class UseMachineCommand extends Command
 
     private function returnUserCoins(string $userId): array
     {
-        /** @var UserResponse $user */
-        $user = $this->queryBus->ask(new FindUserQuery($userId));
+        try {
+            /** @var UserResponse $user */
+            $user = $this->queryBus->ask(new FindUserQuery($userId));
 
-        $result = $user->coins();
+            $result = $user->coins();
 
-        $this->commandBus->dispatch(new ReturnCoinsCommand($user->id()));
+            $this->commandBus->dispatch(new ReturnCoinsCommand($user->id()));
 
-        $result[] = 'All coins returned';
+            $result[] = 'All coins returned';
 
-        return $result;
+            return $result;
+        } catch (DomainError $e) {
+            return [$e->getMessage()];
+        }
 
     }
 
