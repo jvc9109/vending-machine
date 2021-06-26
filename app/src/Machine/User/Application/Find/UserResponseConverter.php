@@ -12,7 +12,7 @@ final class UserResponseConverter
     {
         return new UserResponse(
             $user->id()->value(),
-            $user->coins()->items(),
+            $user->coins()->toPrimitives(),
             $user->type()->value()
         );
     }

@@ -18,4 +18,17 @@ final class UserCoins extends Collection
     {
         return new self([...$this->items(),$coin]);
     }
+
+    public function toPrimitives(): array
+    {
+        $coins = $this->items();
+        $primitives = [];
+
+        /** @var CoinValueObject $coin */
+        foreach ($coins as $coin){
+            $primitives[] = $coin->value();
+        }
+
+        return $primitives;
+    }
 }

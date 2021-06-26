@@ -20,11 +20,10 @@ final class InMemorySymfonyQueryBus implements QueryBus
 {
     private MessageBus $bus;
 
-    public function __construct(iterable $queryHandlers, MiddlewareInterface $middlewareHandler)
+    public function __construct(iterable $queryHandlers)
     {
         $this->bus = new MessageBus(
             [
-                $middlewareHandler,
                 new HandleMessageMiddleware(
                     new HandlersLocator(CallableFirstParameterExtractor::forCallables($queryHandlers))
                 ),

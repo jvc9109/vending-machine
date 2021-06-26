@@ -5,13 +5,16 @@ namespace VendingMachine\Apps\Vending\Backend\Command;
 
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use VendingMachine\Machine\User\Application\AddCoin\AddCoinCommand;
+use VendingMachine\Machine\User\Application\Find\FindUserQuery;
+use VendingMachine\Machine\User\Application\Find\UserResponse;
 use VendingMachine\Machine\User\Application\InitSession\InitSessionCommand;
+use VendingMachine\Machine\User\Application\ReturnCoins\ReturnCoinsCommand;
 use VendingMachine\Shared\Domain\Bus\Command\CommandBus;
+use VendingMachine\Shared\Domain\Bus\Query\QueryBus;
 use VendingMachine\Shared\Domain\UuidGenerator;
 use VendingMachine\Shared\Domain\ValueObject\Money\CoinNotAcceptDomainError;
 
@@ -20,7 +23,11 @@ final class UseMachineCommand extends Command
 
     private const EXIT = 'exit';
 
-    public function __construct(private CommandBus $commandBus, private UuidGenerator $generator)
+    public function __construct(
+        private CommandBus $commandBus,
+        private UuidGenerator $generator,
+        private QueryBus $queryBus
+    )
     {
         parent::__construct();
     }
@@ -29,7 +36,6 @@ final class UseMachineCommand extends Command
     {
         $this
             ->setName('vending:machine:use')
-
             ->setDescription('Start to use the vending machine. Add the set of commands for the machine.');
     }
 
@@ -90,8 +96,18 @@ final class UseMachineCommand extends Command
     {
     }
 
-    private function returnUserCoins($userId): array
+    private function returnUserCoins(string $userId): array
     {
+        /** @var UserResponse $user */
+        $user = $this->queryBus->ask(new FindUserQuery($userId));
+
+        $result = $user->coins();
+
+        $this->commandBus->dispatch(new ReturnCoinsCommand($user->id()));
+
+        $result[] = 'All coins returned';
+
+        return $result;
 
     }
 

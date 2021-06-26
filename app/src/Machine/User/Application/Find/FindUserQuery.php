@@ -6,7 +6,7 @@ namespace VendingMachine\Machine\User\Application\Find;
 
 use VendingMachine\Shared\Domain\Bus\Query\Query;
 
-final class GetUserQuery implements Query
+final class FindUserQuery implements Query
 {
 
 

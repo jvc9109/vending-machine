@@ -6,7 +6,7 @@ namespace VendingMachine\Machine\User\Application\Find;
 
 use VendingMachine\Shared\Domain\Bus\Query\QueryHandler;
 
-final class GetUserQueryHandler implements QueryHandler
+final class FindUserQueryHandler implements QueryHandler
 {
 
     public function __construct(
@@ -15,7 +15,7 @@ final class GetUserQueryHandler implements QueryHandler
     {
     }
 
-    public function __invoke(GetUserQuery $query): UserResponse
+    public function __invoke(FindUserQuery $query): UserResponse
     {
         $user = $this->finder->__invoke($query->userId());
 
