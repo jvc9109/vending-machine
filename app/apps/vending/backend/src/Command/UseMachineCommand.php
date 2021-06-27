@@ -8,7 +8,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use VendingMachine\Machine\Items\Application\Obtain\ItemResponse;
 use VendingMachine\Machine\Items\Application\Obtain\ObtainItemQuery;
+use VendingMachine\Machine\Items\Application\Purchase\PurchaseItemCommand;
 use VendingMachine\Machine\User\Application\AddCoin\AddCoinCommand;
 use VendingMachine\Machine\User\Application\Find\FindUserQuery;
 use VendingMachine\Machine\User\Application\Find\UserResponse;
@@ -95,16 +97,17 @@ final class UseMachineCommand extends Command
     private function obtainItem(string $action, string $userId): array
     {
         [$action, $itemName] = explode($action, '-');
-        //Obatain item by name
         try {
-            /** @var ItemREs $item */
-            $item = $this->queryBus->ask(new ObtainItemQuery($itemName));
-            //OrderPurchase
+            /** @var ItemResponse $item */
+            $item = $this->queryBus->ask(new ObtainItemQuery(strtolower($itemName)));
+            // Synchronous side effects of purchase: Add user coins to counters, calculate change and
+            // reduce change coins from counters.
+            $this->commandBus->dispatch(new PurchaseItemCommand($item->id(), $userId));
 
-            //else -> ask for user (has already an updated usercoins count)
-            // side effects: on item purchased -> add machine coins && calculate new user coins (aka exchange)  -> on exchange given -> recalculate machine coins
-            //send return coins command
-            return ['Here there is your item'];
+            /** @var UserResponse $userUpdated */
+            $userUpdated = $this->queryBus->ask(new FindUserQuery($userId));
+
+            return [sprintf('%s, %s', strtoupper($item->name()), implode(',', $userUpdated->coins()))];
         } catch (DomainError $e) {
             return $this->writeErrorMessages($e);
         }
