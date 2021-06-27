@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace VendingMachine\Shared\Infrastructure\Doctrine;
 
 use VendingMachine\Shared\Infrastructure\Doctrine\Dbal\DbalCustomTypesRegistrar;
-use Doctrine\Common\Cache\ApcuCache;
-use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Logging\SQLLogger;
 use Doctrine\DBAL\Schema\MySqlSchemaManager;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
@@ -29,7 +26,6 @@ final class DoctrineEntityManagerFactory
         bool $isDevMode,
         string $schemaFile,
         array $dbalCustomTypesClasses,
-        ?SQLLogger $logger
     ): EntityManager
     {
         if ($isDevMode) {
@@ -38,7 +34,7 @@ final class DoctrineEntityManagerFactory
 
         DbalCustomTypesRegistrar::register($dbalCustomTypesClasses);
 
-        return EntityManager::create($parameters, self::createConfiguration($contextPrefixes, $isDevMode, $logger));
+        return EntityManager::create($parameters, self::createConfiguration($contextPrefixes, $isDevMode));
     }
 
     private static function generateDatabaseIfNotExists(array $parameters, string $schemaFile): void
@@ -71,11 +67,9 @@ final class DoctrineEntityManagerFactory
         return in_array($databaseName, $schemaManager->listDatabases(), true);
     }
 
-    private static function createConfiguration(array $contextPrefixes, bool $isDevMode, ?SQLLogger $logger): Configuration
+    private static function createConfiguration(array $contextPrefixes, bool $isDevMode): Configuration
     {
-        $cache  = $isDevMode ? new ArrayCache() : new ApcuCache();
-        $config = Setup::createConfiguration($isDevMode, null, $cache);
-        $config->setSQLLogger($logger);
+        $config = Setup::createConfiguration($isDevMode);
 
         $config->setMetadataDriverImpl(new SimplifiedXmlDriver(array_merge(self::$sharedPrefixes, $contextPrefixes)));
 

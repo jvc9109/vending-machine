@@ -1,5 +1,5 @@
 imports:
-#    - { resource: ../../../../src/Marchine/Shared/Infrastructure/Symfony/DependencyInjection/machine_services.yaml }
+    - { resource: ../../../../src/Marchine/Shared/Infrastructure/Symfony/DependencyInjection/machine_services.yaml }
 parameters:
   locale: ~
 services:

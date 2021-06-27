@@ -1,0 +1,16 @@
+services:
+  # Databases
+  Doctrine\ORM\EntityManager:
+    factory: [ VendingMachine\Machine\Shared\Infrastructure\Doctrine\MachineEntityManagerFactory, create ]
+    arguments:
+      - driver: '%env(VENDING_DATABASE_DRIVER)%'
+        host: '%env(VENDING_DATABASE_HOST)%'
+        port: '%env(VENDING_DATABASE_PORT)%'
+        dbname: '%env(VENDING_DATABASE_NAME)%'
+        user: '%env(VENDING_DATABASE_USER)%'
+        password: '%env(VENDING_DATABASE_PASSWORD)%'
+      - '%env(APP_ENV)%'
+    tags:
+      - { name: cyberclick.database_connection }
+    public: true
+
