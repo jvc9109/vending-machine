@@ -34,15 +34,16 @@ final class ChangeCalculator
 
         $totalMoney = array_sum($user->coins()->toPrimitives());
 
-        $totalChange = (int)($totalMoney - $itemPrice) * 1000;
+        $totalRemainder = (int)(($totalMoney - $itemPrice) * 1000);
         $change      = [];
 
         foreach (CoinValueObject::VALID_COINS as $coin) {
-            $numberOfCoins         = (int)$totalChange / ((int)$coin * 1000);
+            $coinMicros = (int)($coin * 1000);
+            $numberOfCoins         = (int)($totalRemainder / $coinMicros);
             $change[(string)$coin] = $numberOfCoins;
-            $totalChange           = $totalChange - (int)$numberOfCoins * $coin * 1000;
+            $totalRemainder           = $totalRemainder - $numberOfCoins * $coinMicros;
 
-            if ($totalChange <= 0) {
+            if ($totalRemainder <= 0) {
                 break;
             }
         }
@@ -57,10 +58,13 @@ final class ChangeCalculator
 
             /** @var CoinsCounterResponse $availableCoin */
             foreach ($availableCoins as $availableCoin) {
-                repeat(function () use ($user, $availableCoin){
-                    $user->recordChangeCoin($availableCoin);
-                    },
-                    $change[(string)$availableCoin->coinValue()]
+                $key =(string)$availableCoin->coinValue();
+                if (!array_key_exists($key, $change)){
+                    continue;
+                }
+                repeat(
+                    fn() => $user->recordChangeCoin($availableCoin),
+                    $change[$key]
                 );
             }
         }
