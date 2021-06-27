@@ -34,6 +34,7 @@ final class Item extends AggregateRoot
         }
 
         if ($availableMoney < $this->price->value()) {
+            //TODO add domain eRRor
             throw new \Exception();
         }
 

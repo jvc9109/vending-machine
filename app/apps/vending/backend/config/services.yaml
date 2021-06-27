@@ -39,10 +39,6 @@ services:
   VendingMachine\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
     arguments: [ !tagged vendingmachine.domain_event_subscriber ]
     lazy: true
-  VendingMachine\Shared\Infrastructure\Bus\Event\DomainEventMapping:
-    arguments: [ !tagged vendingmachine.domain_event_subscriber ]
 
-  VendingMachine\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
-    arguments: [ !tagged vendingmachine.domain_event_subscriber ]
 
   VendingMachine\Shared\Domain\Bus\Event\EventBus: '@VendingMachine\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'

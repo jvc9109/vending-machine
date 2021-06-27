@@ -11,6 +11,8 @@ interface CoinsCounterRepository
 
     public function search(CoinsCounterId $coinsCounterId): ?CoinsCounter;
 
+    public function searchByCoinValue(CoinsCounterCoinValue $coinValue): ?CoinsCounter;
+
     public function getAll(): CoinsCounters;
 
 }
