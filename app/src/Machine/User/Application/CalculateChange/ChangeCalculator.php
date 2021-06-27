@@ -38,19 +38,19 @@ final class ChangeCalculator
         $change      = [];
 
         foreach (CoinValueObject::VALID_COINS as $coin) {
+            if ($totalRemainder <= 0) {
+                break;
+            }
+
             $coinMicros = (int)($coin * 1000);
             $numberOfCoins         = (int)($totalRemainder / $coinMicros);
             $change[(string)$coin] = $numberOfCoins;
             $totalRemainder           = $totalRemainder - $numberOfCoins * $coinMicros;
-
-            if ($totalRemainder <= 0) {
-                break;
-            }
         }
 
         $user->digestCoins();
 
-        if (!count($change) === 0) {
+        if (count($change) !== 0) {
             /** @var CoinsCountersResponse $availableCoins */
             $availableCoins = $this->queryBus->ask(
                 new GetAllCountersQuery()
