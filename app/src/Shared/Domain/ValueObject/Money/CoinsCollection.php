@@ -5,6 +5,7 @@ namespace VendingMachine\Shared\Domain\ValueObject\Money;
 
 
 use VendingMachine\Shared\Domain\Collection;
+use function Lambdish\Phunctional\map;
 
 class CoinsCollection extends Collection
 {
@@ -15,14 +16,6 @@ class CoinsCollection extends Collection
 
     final public function toPrimitives(): array
     {
-        $coins = $this->items();
-        $primitives = [];
-
-        /** @var CoinValueObject $coin */
-        foreach ($coins as $coin){
-            $primitives[] = $coin->value();
-        }
-
-        return $primitives;
+        return map(fn(CoinValueObject $coin) => $coin->value(), $this->items());
     }
 }

@@ -10,6 +10,10 @@ use VendingMachine\Shared\Domain\Bus\Event\DomainEventSubscriber;
 final class CalculateChangeOnItemPurchased implements DomainEventSubscriber
 {
 
+    public function __construct(private ChangeCalculator $calculator)
+    {
+    }
+
     public static function subscribedTo(): array
     {
         return [ItemPurchasedDomainEvent::class];
@@ -17,8 +21,10 @@ final class CalculateChangeOnItemPurchased implements DomainEventSubscriber
 
     public function __invoke(ItemPurchasedDomainEvent $event): void
     {
-        $itemId = $event->aggregateId();
         $itemPrice = $event->itemPrice();
+        $userId = $event->userId();
+
+        $this->calculator->__invoke($userId, $itemPrice);
     }
 
 
