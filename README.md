@@ -27,12 +27,13 @@ As a user you can perform different actions with the vending machine. Each actio
 
 <h4>Actions:</h4>
 1. Insert Coins: insert `1.00` as 1 unit coin, `0.25`, `0.10` or `0.05` to increase your available money. No other coins are valid.
- After each coin hit *enter*. Example: `1.00`
-1. `RETURN-COINS`: type this command and hit enter. You will get your money back.
-1. `GET-XXXX`: use your current money to purchase the item from the command. Valid items are: `WATER, JUICE, SODA`.
+ After each coin hit *enter*. Example: `1.00`.
+
+2. `RETURN-COINS`: type this command and hit enter. You will get your money back.
+3. `GET-XXXX`: use your current money to purchase the item from the command. Valid items are: `WATER, JUICE, SODA`.
 <br>Example: `GET-WATER`.
 
-1. `exit`: Type this command to leave.
+4. `exit`: Type this command to leave.
 
 <h3>Service mode:</h3>
 If you type `SERVICE` you will enter the service mode. The operation actions are:
