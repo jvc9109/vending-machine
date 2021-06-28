@@ -23,9 +23,14 @@ final class CoinsCounter extends AggregateRoot
         return new self(new CoinsCounterId($id), new CoinsCounterCoinValue($coin), CoinsCounterTotalCoins::initialize());
     }
 
+    public function refill(int $amount): void
+    {
+        $this->totalCoins = new CoinsCounterTotalCoins($this->totalCoins->value() + $amount);
+    }
+
     public function increment(): void
     {
-        $this->totalCoins             = $this->totalCoins->increment();
+        $this->totalCoins = $this->totalCoins->increment();
     }
 
     public function decrement(): void

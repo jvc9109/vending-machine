@@ -11,6 +11,7 @@ use VendingMachine\Machine\User\Domain\UserFinder as DomainUserFinder;
 final class UserFinder
 {
     private DomainUserFinder $finder;
+
     public function __construct(private UserRepository $repository)
     {
         $this->finder = new DomainUserFinder($this->repository);
