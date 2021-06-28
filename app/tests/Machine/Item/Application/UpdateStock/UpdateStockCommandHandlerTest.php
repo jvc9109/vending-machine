@@ -8,6 +8,7 @@ use VendingMachine\Machine\Items\Application\UpdateStock\StockUpdater;
 use VendingMachine\Machine\Items\Application\UpdateStock\UpdateStockCommand;
 use VendingMachine\Machine\Items\Application\UpdateStock\UpdateStockCommandHandler;
 use VendingMachine\Tests\Machine\Item\Domain\ItemMother;
+use VendingMachine\Tests\Machine\Item\Domain\ItemStatusMother;
 use VendingMachine\Tests\Machine\Item\Domain\ItemStockMother;
 use VendingMachine\Tests\Machine\Item\ItemModuleUnitTestCase;
 
@@ -33,7 +34,7 @@ final class UpdateStockCommandHandlerTest extends ItemModuleUnitTestCase
             $item->id(),
             $item->name(),
             $item->price(),
-            $item->status(),
+            ItemStatusMother::available(),
             ItemStockMother::create($command->stock())
         );
 

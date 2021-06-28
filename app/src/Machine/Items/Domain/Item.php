@@ -64,6 +64,7 @@ final class Item extends AggregateRoot
     public function makeStock(int $stock): void
     {
         $this->stock = new ItemStock($stock);
+        $this->status = ItemStatus::available();
         $this->updatedOn = new \DateTimeImmutable();
     }
 
