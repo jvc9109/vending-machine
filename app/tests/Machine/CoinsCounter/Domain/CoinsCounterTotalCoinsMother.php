@@ -13,4 +13,9 @@ final class CoinsCounterTotalCoinsMother
     {
         return new CoinsCounterTotalCoins($value ?? MotherCreator::random()->randomNumber());
     }
+
+    public static function initialize(): CoinsCounterTotalCoins
+    {
+        return CoinsCounterTotalCoins::initialize();
+    }
 }
