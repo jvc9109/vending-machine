@@ -43,6 +43,8 @@ final class User extends AggregateRoot
     public function recordChangeCoin(CoinsCounterResponse $coin): void
     {
         $this->insertCoin($coin->coinValue());
+        $this->updatedOn = new \DateTimeImmutable();
+
         $this->record(
             new UserCoinGivenDomainEvent(
                 $this->id->value(),
@@ -69,6 +71,8 @@ final class User extends AggregateRoot
             );
         }
         $this->coins = new UserCoins([]);
+        $this->updatedOn = new \DateTimeImmutable();
+
     }
 
     public function id(): UserId
