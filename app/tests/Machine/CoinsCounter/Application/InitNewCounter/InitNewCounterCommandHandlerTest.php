@@ -33,7 +33,7 @@ final class InitNewCounterCommandHandlerTest extends CoinsCounterModuleUnitTestC
         $expectedCounter = CoinsCounterMother::create(
             CoinsCounterIdMother::create($command->counterId()),
             CoinsCounterCoinValueMother::create($command->coinValue()),
-            CoinsCounterTotalCoinsMother::initialize()
+            CoinsCounterTotalCoinsMother::create(100)
         );
 
         $this->shouldSave($expectedCounter);

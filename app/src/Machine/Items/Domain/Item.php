@@ -61,6 +61,12 @@ final class Item extends AggregateRoot
         );
     }
 
+    public function makeStock(int $stock): void
+    {
+        $this->stock = new ItemStock($stock);
+        $this->updatedOn = new \DateTimeImmutable();
+    }
+
     public function id(): ItemId
     {
         return $this->id;

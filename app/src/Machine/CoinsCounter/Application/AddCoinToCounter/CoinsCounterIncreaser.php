@@ -4,24 +4,21 @@
 namespace VendingMachine\Machine\CoinsCounter\Application\AddCoinToCounter;
 
 
-use VendingMachine\Machine\CoinsCounter\Domain\CoinsCounterCoinValue;
+use VendingMachine\Machine\CoinsCounter\Domain\CoinsCounterFinderByValue;
 use VendingMachine\Machine\CoinsCounter\Domain\CoinsCounterRepository;
 
 final class CoinsCounterIncreaser
 {
-    public function __construct(
-        private CoinsCounterRepository $repository
-    )
+    private CoinsCounterFinderByValue $finderByValue;
+
+    public function __construct(private CoinsCounterRepository $repository)
     {
+        $this->finderByValue = new CoinsCounterFinderByValue($this->repository);
     }
 
     public function __invoke(float $coinValue): void
     {
-        $counter = $this->repository->searchByCoinValue(new CoinsCounterCoinValue($coinValue));
-        if ($counter === null) {
-            //TODO Add domain error type
-            throw new \Exception();
-        }
+        $counter = $this->finderByValue->__invoke($coinValue);
 
         $counter->increment();
 

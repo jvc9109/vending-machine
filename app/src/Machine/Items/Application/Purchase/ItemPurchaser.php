@@ -4,6 +4,7 @@
 namespace VendingMachine\Machine\Items\Application\Purchase;
 
 
+use VendingMachine\Machine\Items\Domain\ItemFinder;
 use VendingMachine\Machine\Items\Domain\ItemId;
 use VendingMachine\Machine\Items\Domain\ItemNotFoundDomainError;
 use VendingMachine\Machine\Items\Domain\ItemRepository;
@@ -17,13 +18,14 @@ use function Lambdish\Phunctional\map;
 
 final class ItemPurchaser
 {
-
+    private ItemFinder $finder;
     public function __construct(
         private ItemRepository $repository,
         private EventBus $eventBus,
         private QueryBus $queryBus
     )
     {
+        $this->finder = new ItemFinder($this->repository);
     }
 
     public function __invoke(
@@ -36,11 +38,7 @@ final class ItemPurchaser
             new FindUserQuery($userId)
         );
 
-        $item = $this->repository->search(new ItemId($itemId));
-
-        if ($item === null) {
-            throw new ItemNotFoundDomainError($itemId);
-        }
+        $item = $this->finder->__invoke($itemId);
 
         $userCoins = new CoinsCollection(
             map(fn(float $coin): CoinValueObject => new CoinValueObject($coin), $user->coins())
