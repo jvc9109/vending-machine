@@ -2,7 +2,7 @@
                   xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="VendingMachine\Machine\CoinsCounter\Domain\CoinsCounter" table="vending_items">
+    <entity name="VendingMachine\Machine\CoinsCounter\Domain\CoinsCounter" table="vending_coin_counters">
         <id name="id" type="coins_counter_id" column="id" length="36"/>
 
         <embedded name="coin" class="VendingMachine\Machine\CoinsCounter\Domain\CoinsCounterCoinValue" use-column-prefix="false"/>

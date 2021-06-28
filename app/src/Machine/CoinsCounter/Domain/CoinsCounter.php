@@ -8,6 +8,7 @@ use VendingMachine\Shared\Domain\Aggregate\AggregateRoot;
 
 final class CoinsCounter extends AggregateRoot
 {
+    private const FIRST_SETUP_DEFAULT_COUNTER = 100;
 
     public function __construct(
         private CoinsCounterId $id,
@@ -20,7 +21,7 @@ final class CoinsCounter extends AggregateRoot
 
     public static function initialize(string $id, float $coin): self
     {
-        return new self(new CoinsCounterId($id), new CoinsCounterCoinValue($coin), CoinsCounterTotalCoins::initialize());
+        return new self(new CoinsCounterId($id), new CoinsCounterCoinValue($coin), new CoinsCounterTotalCoins(self::FIRST_SETUP_DEFAULT_COUNTER));
     }
 
     public function refill(int $amount): void

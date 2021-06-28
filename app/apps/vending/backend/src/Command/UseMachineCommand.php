@@ -106,6 +106,7 @@ final class UseMachineCommand extends Command
 
             /** @var UserResponse $userUpdated */
             $userUpdated = $this->queryBus->ask(new FindUserQuery($userId));
+            $this->commandBus->dispatch(new ReturnCoinsCommand($userUpdated->id()));
 
             return [sprintf('%s, %s', strtoupper($item->name()), implode(',', $userUpdated->coins()))];
         } catch (DomainError $e) {

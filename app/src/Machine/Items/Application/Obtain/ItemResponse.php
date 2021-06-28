@@ -4,7 +4,9 @@
 namespace VendingMachine\Machine\Items\Application\Obtain;
 
 
-final class ItemResponse
+use VendingMachine\Shared\Domain\Bus\Query\Response;
+
+final class ItemResponse implements Response
 {
 
     public function __construct(

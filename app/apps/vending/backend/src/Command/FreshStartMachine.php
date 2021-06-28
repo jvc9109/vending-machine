@@ -7,9 +7,11 @@ namespace VendingMachine\Apps\Vending\Backend\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use VendingMachine\Machine\CoinsCounter\Application\InitNewCounter\InitNewCounterCommand;
 use VendingMachine\Machine\Items\Application\Create\CreateItemCommand;
 use VendingMachine\Shared\Domain\Bus\Command\CommandBus;
 use VendingMachine\Shared\Domain\UuidGenerator;
+use VendingMachine\Shared\Domain\ValueObject\Money\CoinValueObject;
 
 final class FreshStartMachine extends Command
 {
@@ -48,6 +50,12 @@ final class FreshStartMachine extends Command
         $this->commandBus->dispatch(
             new CreateItemCommand($this->generator->generate(), 'soda', self::SODA_PRICE, self::ITEM_UNITS)
         );
+
+        foreach (CoinValueObject::VALID_COINS as $coin) {
+            $this->commandBus->dispatch(
+                new InitNewCounterCommand($this->generator->generate(), $coin)
+            );
+        }
 
         return Command::SUCCESS;
     }

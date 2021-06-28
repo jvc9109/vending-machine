@@ -3,6 +3,6 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <embeddable name="VendingMachine\Machine\CoinsCounter\Domain\CoinsCounterTotalCoins">
-        <field name="value" type="integer" column="total"/>
+        <field name="value" type="integer" column="total_coins"/>
     </embeddable>
 </doctrine-mapping>
