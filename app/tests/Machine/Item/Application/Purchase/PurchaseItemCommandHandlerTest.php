@@ -12,7 +12,6 @@ use VendingMachine\Tests\Machine\Item\Domain\ItemIdMother;
 use VendingMachine\Tests\Machine\Item\Domain\ItemMother;
 use VendingMachine\Tests\Machine\Item\Domain\ItemPriceMother;
 use VendingMachine\Tests\Machine\Item\Domain\ItemPurchasedDomainEventMother;
-use VendingMachine\Tests\Machine\Item\Domain\ItemStatusMother;
 use VendingMachine\Tests\Machine\Item\Domain\ItemStockMother;
 use VendingMachine\Tests\Machine\Item\ItemModuleUnitTestCase;
 use VendingMachine\Tests\Machine\User\Application\Find\UserResponseMother;

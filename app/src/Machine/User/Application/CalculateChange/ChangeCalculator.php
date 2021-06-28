@@ -22,7 +22,7 @@ final class ChangeCalculator
     public function __construct(
         private UserRepository $repository,
         private QueryBus $queryBus,
-        private EventBus $eventBus
+        private EventBus $eventBus,
     )
     {
         $this->finder = new UserFinder($this->repository);

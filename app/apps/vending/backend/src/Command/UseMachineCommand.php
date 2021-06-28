@@ -96,7 +96,7 @@ final class UseMachineCommand extends Command
 
     private function obtainItem(string $action, string $userId): array
     {
-        [$action, $itemName] = explode($action, '-');
+        [$actionName, $itemName] = explode('-', $action);
         try {
             /** @var ItemResponse $item */
             $item = $this->queryBus->ask(new ObtainItemQuery(strtolower($itemName)));

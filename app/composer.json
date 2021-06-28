@@ -22,7 +22,8 @@
     "symfony/framework-bundle": "5.2.*",
     "symfony/yaml": "5.2.*",
     "symfony/messenger": "5.2.*",
-    "symfony/monolog-bundle": "^3.6"
+    "symfony/monolog-bundle": "^3.6",
+    "symfony/proxy-manager-bridge": "^5.3"
   },
   "autoload": {
     "psr-4": {

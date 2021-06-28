@@ -1,5 +1,5 @@
 imports:
-    - { resource: ../../../../src/Marchine/Shared/Infrastructure/Symfony/DependencyInjection/machine_services.yaml }
+    - { resource: ../../../../src/Machine/Shared/Infrastructure/Symfony/DependencyInjection/machine_services.yaml }
 parameters:
   locale: ~
 services:
@@ -26,6 +26,10 @@ services:
   VendingMachine\Machine\:
     resource: '../../../../src/Machine/*'
 
+  VendingMachine\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
+    arguments: [ !tagged vendingmachine.domain_event_subscriber ]
+    lazy: true
+
   VendingMachine\Shared\Infrastructure\Doctrine\DatabaseConnections:
     arguments: [ !tagged vendingmachine.database_connection ]
 
@@ -34,11 +38,3 @@ services:
 
   VendingMachine\Shared\Infrastructure\Bus\Query\InMemory\InMemorySymfonyQueryBus:
     arguments: [ !tagged vendingmachine.query_handler ]
-    lazy: true
-
-  VendingMachine\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
-    arguments: [ !tagged vendingmachine.domain_event_subscriber ]
-    lazy: true
-
-
-  VendingMachine\Shared\Domain\Bus\Event\EventBus: '@VendingMachine\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'

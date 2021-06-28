@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace VendingMachine\Shared\Infrastructure\Bus\Command\InMemory;
 
-use VendingMachine\Shared\Domain\Bus\Command\Command;
-use VendingMachine\Shared\Domain\Bus\Command\CommandBus;
-use VendingMachine\Shared\Infrastructure\Bus\CallableFirstParameterExtractor;
-use VendingMachine\Shared\Infrastructure\Bus\Command\CommandNotRegisteredError;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
-use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
+use VendingMachine\Shared\Domain\Bus\Command\Command;
+use VendingMachine\Shared\Domain\Bus\Command\CommandBus;
+use VendingMachine\Shared\Infrastructure\Bus\CallableFirstParameterExtractor;
+use VendingMachine\Shared\Infrastructure\Bus\Command\CommandNotRegisteredError;
 
 final class InMemorySymfonyCommandBus implements CommandBus
 {

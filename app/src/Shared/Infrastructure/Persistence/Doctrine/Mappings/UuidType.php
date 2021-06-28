@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VendingMachine\Shared\Infrastructure\Persistence\Doctrine;
+namespace VendingMachine\Shared\Infrastructure\Persistence\Doctrine\Mappings;
 
 use VendingMachine\Shared\Domain\Utils;
 use VendingMachine\Shared\Domain\ValueObject\Uuid;

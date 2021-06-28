@@ -1,11 +1,11 @@
 <?php
 
 
-namespace VendingMachine\Machine\Items\Infrastructure\Persistence;
+namespace VendingMachine\Machine\Items\Infrastructure\Persistence\Doctrine;
 
 
 use VendingMachine\Machine\Items\Domain\ItemId;
-use VendingMachine\Shared\Infrastructure\Persistence\Doctrine\UuidType;
+use VendingMachine\Shared\Infrastructure\Persistence\Doctrine\MAppings\UuidType;
 
 final class ItemIdType extends UuidType
 {

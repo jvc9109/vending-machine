@@ -25,6 +25,18 @@ final class Item extends AggregateRoot
         parent::__construct();
     }
 
+    public static function create(string $id, string $name, float $price, int $stock)
+    {
+       return new self(
+            new ItemId($id),
+            new ItemName($name),
+            new ItemPrice($price),
+            ItemStatus::available(),
+            new ItemStock($stock)
+        );
+
+    }
+
     public function purchaseItem(CoinsCollection $userCoins, string $userId): void
     {
         $availableMoney = 0;

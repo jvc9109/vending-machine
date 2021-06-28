@@ -12,4 +12,9 @@ final class ItemStatusMother
     {
         return new ItemStatus($value ?? ItemStatus::random()->value());
     }
+
+    public static function available(): ItemStatus
+    {
+        return ItemStatus::available();
+    }
 }
